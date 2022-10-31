@@ -5,7 +5,9 @@
 - [Typical configuration](#config-file)
   - [listen-ip](#listen-ip)
   - [listen-ip](#listen-host)
-  - [Let’s Encrypt](#Let’s Encrypt)
+  - [Static_Assets](#Static_Assets)
+  - []
+  - [Let’s_Encrypt](#Let’s_Encrypt)
 - [Nginx Performance](#nginx-performance)
   - [Load-Balancing](#load-balancing)
     - [php-fpm Unix socket](#php-fpm-unix-socket)
@@ -77,6 +79,18 @@ server {
 ```
   
 Now for each site mysite.example.com that you want to serve…
+
+#### Static_Assets
+```
+server {
+  listen 80;
+  server_name yourdomain.com;
+
+  location / {
+          root /path/to/website;
+  } 
+}
+```
 
 #### Most useful variables
 ```
