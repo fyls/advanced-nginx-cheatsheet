@@ -73,6 +73,7 @@ server {
 
   # Listen to unspecified Hostnames (Listens to IP address itself)
   server_name "";```
+  
 Now for each site mysite.example.com that you want to serve…
 
 ##### Most useful variables
