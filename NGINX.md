@@ -51,7 +51,7 @@ Put this at
 It returns a 410 for any port 80 request for a domain name we're not serving with
 a more specific configuration.
 #### listen-ip
-```
+```nginx
 server {
   listen 80 default_server;
   listen [::]:80 default_server;
@@ -63,7 +63,7 @@ server {
 }
 ```
 #### listen-host
-```
+```nginx
 server {
   # Listen to yourdomain.com
   server_name yourdomain.com;
@@ -84,7 +84,7 @@ server {
 Now for each site mysite.example.com that you want to serve…
 
 #### Static_Assets
-```
+```nginx
 server {
   listen 80;
   server_name yourdomain.com;
@@ -96,14 +96,14 @@ server {
 ```
 
 #### Redirect
-```
+```nginx
 server {
   listen 80;
   server_name www.yourdomain.com;
   return 301 http://yourdomain.com$request_uri;
 }
 ```
-```
+```nginx
 server {
   listen 80;
   server_name www.yourdomain.com;
@@ -114,7 +114,7 @@ server {
 }
 ```
 #### Reverse_Proxy
-```
+```nginx
 server {
   listen 80;
   server_name yourdomain.com;
@@ -129,6 +129,7 @@ server {
 
 #### Load_Balancing
 ```
+nginx
 upstream node_js {
   server 0.0.0.0:3000;
   server 0.0.0.0:4000;
@@ -173,6 +174,7 @@ The ability to set variables at runtime and control logic flow based on them is 
 
 ##### Set_variable:
 ```
+nginx
 Syntax:     set $variable value;
 Default:    —
 Context:    server, location, if
@@ -181,6 +183,7 @@ Context:    server, location, if
 Then use if etc.:
 
 ```
+nginx
 Syntax:     if (condition) { rewrite directives... }
 Default:    —
 Context:    server, location2
@@ -198,6 +201,7 @@ Context:    server, location2
 
 ###### Examples:
 ```
+nginx
 if ($http_user_agent ~ MSIE) {
     rewrite ^(.*)$ /msie/$1 break;
 }
@@ -230,6 +234,7 @@ Based rather loosely on https://certbot.eff.org/lets-encrypt/pip-nginx.
 Before you start, your site must already be on the internet accessible using all the domain names you want certificates for, at port 80, and without any automatic redirect to port 443. If that makes you paranoid, you can configure nginx to redirect 80 to 443 except for /.well-known/acme-challenge. Here’s an unsupported example:
 
 ```
+nginx
 server {
   listen 80;
 
