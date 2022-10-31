@@ -6,9 +6,10 @@
   - [listen-ip](#listen-ip)
   - [listen-ip](#listen-host)
   - [Static_Assets](#Static_Assets)
+  - [Set_variable](#Set_variable)
   - [Redirect](#Redirect)
-  - [Reverse_Proxy](#Reverse Proxy)
-  - [Load_Balancing](#Load Balancing)
+  - [Reverse_Proxy](#Reverse_Proxy)
+  - [Load_Balancing](#Load_Balancing)
   - [Let’s_Encrypt](#Let’s_Encrypt)
 - [Nginx Performance](#nginx-performance)
   - [Load-Balancing](#load-balancing)
@@ -112,7 +113,7 @@ server {
   }
 }
 ```
-#### Reverse Proxy
+#### Reverse_Proxy
 ```
 server {
   listen 80;
@@ -126,7 +127,7 @@ server {
 }
 ```
 
-#### Load Balancing
+#### Load_Balancing
 ```
 upstream node_js {
   server 0.0.0.0:3000;
@@ -144,7 +145,7 @@ server {
 }
 
 ```
-#### Most useful variables
+#### Most_useful_variables
 ```
 $host
 in this order of precedence: host name from the request line, or host name from the “Host” request header field, or the server name matching a request
@@ -164,13 +165,13 @@ $server_port
 port of the server which accepted a request
 ```
   
-#### Variables in configuration files
+#### Variables_in_configuration_files
   
 See above for “variables” that get set automatically for each request (and that we cannot modify).
 
 The ability to set variables at runtime and control logic flow based on them is part of the rewrite module and not a general feature of nginx.
 
-##### You can set a variable:
+##### Set_variable:
 ```
 Syntax:     set $variable value;
 Default:    —
