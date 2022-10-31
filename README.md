@@ -2,6 +2,132 @@
 
 **Work In Progress, more explanations will be added soon**
 
+**Commented config file**
+FIND OUT: what happens if we get a port 443 ssl request for a hostname that we’re not serving? Does nginx reject it completely, or try to serve it with some existing hostname configuration?
+
+This started from https://ssl-config.mozilla.org but is heavily modified.
+
+# Put this at
+# /etc/nginx/conf.d/00-default-vhost.conf
+# It returns a 410 for any port 80 request for a domain name we're not serving with
+# a more specific configuration.
+server {
+  listen 80 default_server;
+  listen [::]:80 default_server;
+
+  server_name _;
+  return 410;
+  log_not_found off;
+  server_tokens off;
+}
+Now for each site mysite.example.com that you want to serve…
+
+**Most useful variables**
+$host
+in this order of precedence: host name from the request line, or host name from the “Host” request header field, or the server name matching a request
+
+$http_host
+Value of the “Host:” header in the request (same as all $http_<headername> variables)
+
+$https
+“on” if connection operates in SSL mode, or an empty string otherwise
+
+$request_method
+request method, usually “GET” or “POST”
+
+$request_uri
+full original request URI (with arguments)
+
+$scheme
+request scheme, e.g. “http” or “https”
+
+$server_name
+name of the server which accepted a request
+
+$server_port
+port of the server which accepted a request
+
+**Variables in configuration files**
+See above for “variables” that get set automatically for each request (and that we cannot modify).
+
+The ability to set variables at runtime and control logic flow based on them is part of the rewrite module and not a general feature of nginx.
+
+You can set a variable:
+
+Syntax:     set $variable value;
+Default:    —
+Context:    server, location, if
+“The value can contain text, variables, and their combination.” – but I have not yet found the documentation on how these can be “combined”.
+
+Then use if etc.:
+
+Syntax:     if (condition) { rewrite directives... }
+Default:    —
+Context:    server, location
+Conditions can include:
+
+* a variable name; false if the value of a variable is an empty string or “0”;
+* comparison of a variable with a string using the “=” and “!=” operators;
+* matching of a variable against a regular expression using the “~” (for case-sensitive matching) and “~*” (for case-insensitive matching) operators. Regular expressions can contain captures that are made available for later reuse in the $1..$9 variables. Negative operators “!~” and “!~*” are also available. If a regular expression includes the “}” or “;” characters, the whole expressions should be enclosed in single or double quotes.
+* checking of a file existence with the “-f” and “!-f” operators;
+* checking of a directory existence with the “-d” and “!-d” operators;
+* checking of a file, directory, or symbolic link existence with the “-e” and “!-e” operators;
+* checking for an executable file with the “-x” and “!-x” operators.
+Examples:
+
+if ($http_user_agent ~ MSIE) {
+    rewrite ^(.*)$ /msie/$1 break;
+}
+
+if ($http_cookie ~* "id=([^;]+)(?:;|$)") {
+    set $id $1;
+}
+
+if ($request_method = POST) {
+    return 405;
+}
+
+if ($slow) {
+    limit_rate 10k;
+}
+
+if ($invalid_referer) {
+    return 403;
+}
+Warning
+You CANNOT put any directive you want inside the if, only rewrite directives like set, rewrite, return, etc.
+
+Warning
+The values of variables you set this way can ONLY be used in if conditions, and maybe rewrite directives; don’t try to use them elsewhere.
+
+Let’s Encrypt
+Based rather loosely on https://certbot.eff.org/lets-encrypt/pip-nginx.
+
+Before you start, your site must already be on the internet accessible using all the domain names you want certificates for, at port 80, and without any automatic redirect to port 443. If that makes you paranoid, you can configure nginx to redirect 80 to 443 except for /.well-known/acme-challenge. Here’s an unsupported example:
+
+server {
+  listen 80;
+
+  location '/.well-known/acme-challenge' {
+    root        /var/www/demo;
+  }
+
+  location / {
+    if ($scheme = http) {
+      return 301 https://$server_name$request_uri;
+    }
+}
+Install certbot. Assuming Ubuntu, “sudo apt install certbot python3-certbot-nginx” should do it.
+
+Run “sudo certbot certonly –nginx” and follow the instructions.
+
+Set up automatic renewal. This will add a cron command to do it:
+
+echo "0 0,12 * * * root /usr/bin/python -c 'import random; import time; time.sleep(random.random() * 3600)' && certbot renew -q" | sudo tee -a /etc/crontab > /dev/null
+run “sudo certbot renew –dry-run” to test renewal
+
+
+
 **Table of content**
 <!-- TOC -->
 
