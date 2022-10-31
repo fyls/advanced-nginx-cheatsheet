@@ -5,6 +5,7 @@
 - [Typical configuration](#config-file)
   - [listen-ip](#listen-ip)
   - [listen-ip](#listen-host)
+  - [Let’s Encrypt](#Let’s Encrypt)
 - [Nginx Performance](#nginx-performance)
   - [Load-Balancing](#load-balancing)
     - [php-fpm Unix socket](#php-fpm-unix-socket)
