@@ -128,8 +128,7 @@ server {
 ```
 
 #### Load_Balancing
-```
-nginx
+```nginx
 upstream node_js {
   server 0.0.0.0:3000;
   server 0.0.0.0:4000;
@@ -147,21 +146,28 @@ server {
 
 ```
 #### Most_useful_variables
-```
+```nginx
 $host
 in this order of precedence: host name from the request line, or host name from the “Host” request header field, or the server name matching a request
+
 $http_host
 Value of the “Host:” header in the request (same as all $http_<headername> variables)
+
 $https
 “on” if connection operates in SSL mode, or an empty string otherwise
+
 $request_method
 request method, usually “GET” or “POST”
+
 $request_uri
 full original request URI (with arguments)
+
 $scheme
 request scheme, e.g. “http” or “https”
+
 $server_name
 name of the server which accepted a request
+
 $server_port
 port of the server which accepted a request
 ```
@@ -173,8 +179,7 @@ See above for “variables” that get set automatically for each request (and t
 The ability to set variables at runtime and control logic flow based on them is part of the rewrite module and not a general feature of nginx.
 
 ##### Set_variable:
-```
-nginx
+```nginx
 Syntax:     set $variable value;
 Default:    —
 Context:    server, location, if
@@ -182,8 +187,7 @@ Context:    server, location, if
 “The value can contain text, variables, and their combination.” – but I have not yet found the documentation on how these can be “combined”.
 Then use if etc.:
 
-```
-nginx
+```nginx
 Syntax:     if (condition) { rewrite directives... }
 Default:    —
 Context:    server, location2
@@ -200,8 +204,7 @@ Context:    server, location2
 * checking for an executable file with the “-x” and “!-x” operators.
 
 ###### Examples:
-```
-nginx
+```nginx
 if ($http_user_agent ~ MSIE) {
     rewrite ^(.*)$ /msie/$1 break;
 }
@@ -233,8 +236,7 @@ Based rather loosely on https://certbot.eff.org/lets-encrypt/pip-nginx.
 
 Before you start, your site must already be on the internet accessible using all the domain names you want certificates for, at port 80, and without any automatic redirect to port 443. If that makes you paranoid, you can configure nginx to redirect 80 to 443 except for /.well-known/acme-challenge. Here’s an unsupported example:
 
-```
-nginx
+```nginx
 server {
   listen 80;
 
@@ -264,8 +266,7 @@ run “sudo certbot renew –dry-run” to test renewal
 
 #### php-fpm Unix socket
 
-```
-nginx
+```nginx
 upstream php {
     least_conn;
 
