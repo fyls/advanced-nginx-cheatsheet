@@ -42,7 +42,7 @@ Put this at
 /etc/nginx/conf.d/00-default-vhost.conf
 It returns a 410 for any port 80 request for a domain name we're not serving with
 a more specific configuration.
-'''
+```
 server {
   listen 80 default_server;
   listen [::]:80 default_server;
@@ -52,12 +52,12 @@ server {
   log_not_found off;
   server_tokens off;
 }
-'''
+```
 Now for each site mysite.example.com that you want to serve…
 
 **Most useful variables**
 
-'''
+```
 $host
 in this order of precedence: host name from the request line, or host name from the “Host” request header field, or the server name matching a request
 
@@ -81,7 +81,7 @@ name of the server which accepted a request
 
 $server_port
 port of the server which accepted a request
-'''
+```
 **Variables in configuration files**
   
 See above for “variables” that get set automatically for each request (and that we cannot modify).
@@ -89,19 +89,19 @@ See above for “variables” that get set automatically for each request (and t
 The ability to set variables at runtime and control logic flow based on them is part of the rewrite module and not a general feature of nginx.
 
 You can set a variable:
-'''
+```
 Syntax:     set $variable value;
 Default:    —
 Context:    server, location, if
 “The value can contain text, variables, and their combination.” – but I have not yet found the documentation on how these can be “combined”.
-'''
+```
 Then use if etc.:
-'''
+```
 Syntax:     if (condition) { rewrite directives... }
 Default:    —
 Context:    server, location
 Conditions can include:
-'''
+```
 * a variable name; false if the value of a variable is an empty string or “0”;
 * comparison of a variable with a string using the “=” and “!=” operators;
 * matching of a variable against a regular expression using the “~” (for case-sensitive matching) and “~*” (for case-insensitive matching) operators. Regular expressions can contain captures that are made available for later reuse in the $1..$9 variables. Negative operators “!~” and “!~*” are also available. If a regular expression includes the “}” or “;” characters, the whole expressions should be enclosed in single or double quotes.
@@ -110,7 +110,7 @@ Conditions can include:
 * checking of a file, directory, or symbolic link existence with the “-e” and “!-e” operators;
 * checking for an executable file with the “-x” and “!-x” operators.
 Examples:
-'''
+```
 if ($http_user_agent ~ MSIE) {
     rewrite ^(.*)$ /msie/$1 break;
 }
@@ -129,8 +129,7 @@ if ($slow) {
 
 if ($invalid_referer) {
     return 403;
-}
-'''
+}```
 Warning
 You CANNOT put any directive you want inside the if, only rewrite directives like set, rewrite, return, etc.
 
@@ -141,7 +140,7 @@ Let’s Encrypt
 Based rather loosely on https://certbot.eff.org/lets-encrypt/pip-nginx.
 
 Before you start, your site must already be on the internet accessible using all the domain names you want certificates for, at port 80, and without any automatic redirect to port 443. If that makes you paranoid, you can configure nginx to redirect 80 to 443 except for /.well-known/acme-challenge. Here’s an unsupported example:
-
+```
 server {
   listen 80;
 
@@ -153,7 +152,7 @@ server {
     if ($scheme = http) {
       return 301 https://$server_name$request_uri;
     }
-}
+}```
 Install certbot. Assuming Ubuntu, “sudo apt install certbot python3-certbot-nginx” should do it.
 
 Run “sudo certbot certonly –nginx” and follow the instructions.
