@@ -1,4 +1,4 @@
-# advanced-nginx-cheatsheet
+# Rabbitmq cheatsheet
 
 ### Learn
 → rabbitmq.com/documentation
