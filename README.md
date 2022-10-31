@@ -3,6 +3,8 @@
 **Table of content**
 <!-- TOC -->
 - [Typical configuration](#config-file)
+  - [listen-ip](#listen-ip)
+  - [listen-ip](#listen-host)
 - [Nginx Performance](#nginx-performance)
   - [Load-Balancing](#load-balancing)
     - [php-fpm Unix socket](#php-fpm-unix-socket)
@@ -42,6 +44,7 @@ Put this at
 /etc/nginx/conf.d/00-default-vhost.conf
 It returns a 410 for any port 80 request for a domain name we're not serving with
 a more specific configuration.
+#### listen-ip
 ```
 server {
   listen 80 default_server;
@@ -53,6 +56,25 @@ server {
   server_tokens off;
 }
 ```
+#### listen-host
+'''
+server {
+  # Listen to yourdomain.com
+  server_name yourdomain.com;
+
+  # Listen to multiple domains
+  server_name yourdomain.com www.yourdomain.com;
+
+  # Listen to all domains
+  server_name *.yourdomain.com;
+
+  # Listen to all top-level domains
+  server_name yourdomain.*;
+
+  # Listen to unspecified Hostnames (Listens to IP address itself)
+  server_name "";
+
+'''
 Now for each site mysite.example.com that you want to serve…
 
 ##### Most useful variables
