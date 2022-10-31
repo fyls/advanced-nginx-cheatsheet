@@ -6,7 +6,9 @@
   - [listen-ip](#listen-ip)
   - [listen-ip](#listen-host)
   - [Static_Assets](#Static_Assets)
-  - []
+  - [Redirect](#Redirect)
+  - [Reverse Proxy](#Reverse Proxy)
+  - [Load Balancing](#Load Balancing)
   - [Let’s_Encrypt](#Let’s_Encrypt)
 - [Nginx Performance](#nginx-performance)
   - [Load-Balancing](#load-balancing)
@@ -92,6 +94,56 @@ server {
 }
 ```
 
+#### Redirect
+```
+server {
+  listen 80;
+  server_name www.yourdomain.com;
+  return 301 http://yourdomain.com$request_uri;
+}
+```
+```
+server {
+  listen 80;
+  server_name www.yourdomain.com;
+
+  location /redirect-url {
+     return 301 http://otherdomain.com;
+  }
+}
+```
+#### Reverse Proxy
+```
+server {
+  listen 80;
+  server_name yourdomain.com;
+
+  location / {
+     proxy_pass http://0.0.0.0:3000;
+     # where 0.0.0.0:3000 is your application server (Ex: node.js) bound on 0.0.0.0 listening on port 3000
+  }
+
+}
+```
+
+#### Load Balancing
+```
+upstream node_js {
+  server 0.0.0.0:3000;
+  server 0.0.0.0:4000;
+  server 123.131.121.122;
+}
+
+server {
+  listen 80;
+  server_name yourdomain.com;
+
+  location / {
+     proxy_pass http://node_js;
+  }
+}
+
+```
 #### Most useful variables
 ```
 $host
