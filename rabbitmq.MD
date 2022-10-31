@@ -122,3 +122,41 @@ Null вернется для отмененных сообщений.
 prefetch(count, [global])
 ```
 Количество не подтвержденных сообщений которых может получить получатель.
+
+## rabbitmqctl
+
+### vhost
+
+* rabbitmqctl add_vhost [vhost_name]
+
+* rabbitmqctl delete_vhost [vhost_name]
+
+* rabbitmqctl list_vhost [vhost_name]
+
+### permissions
+
+* rabbitmqctl set_permissions [-p \<vhost\>] \<user\> \<conf\> \<write\> \<read\>
+
+  e.g: rabbitmqctl set_permission -p sycamore xiaochen ".\*" ".\*" ".\*"
+
+### stop
+
+* rabbitmqctl stop [-n \<node\>]
+
+## service rabbitmq-server
+
+* service rabbitmq-server start
+
+  \# start the service
+
+* service rabbitmq-server stop
+
+  \# stop the service
+
+* service rabbitmq-server restart
+
+  \# restart the service
+
+* service rabbitmq-server status
+
+  \# check the status
