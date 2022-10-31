@@ -173,7 +173,8 @@ server {
     if ($scheme = http) {
       return 301 https://$server_name$request_uri;
     }
-}```
+}
+```
 
 Install certbot. Assuming Ubuntu, “sudo apt install certbot python3-certbot-nginx” should do it.
 
@@ -190,7 +191,8 @@ run “sudo certbot renew –dry-run” to test renewal
 
 #### php-fpm Unix socket
 
-```nginx
+```
+nginx
 upstream php {
     least_conn;
 
