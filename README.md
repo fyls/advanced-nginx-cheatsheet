@@ -2,7 +2,7 @@
 
 **Table of content**
 <!-- TOC -->
-
+- [config directives].(#Commented config file)
 - [Nginx Performance](#nginx-performance)
   - [Load-Balancing](#load-balancing)
     - [php-fpm Unix socket](#php-fpm-unix-socket)
@@ -33,7 +33,7 @@
 
 <!-- /TOC -->
 
-**Commented config file**
+## Commented config file
 FIND OUT: what happens if we get a port 443 ssl request for a hostname that we’re not serving? Does nginx reject it completely, or try to serve it with some existing hostname configuration?
 
 This started from https://ssl-config.mozilla.org but is heavily modified.
