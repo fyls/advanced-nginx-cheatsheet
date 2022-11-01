@@ -9,3 +9,4 @@
 - [git](https://github.com/fyls/cheat-sheet/blob/master/git.md)
 - [kubernetes](https://github.com/fyls/cheat-sheet/blob/master/kubernetes.md)
 - [terraform](https://github.com/fyls/cheat-sheet/blob/master/terraform.md)
+- [docker-compose](https://github.com/fyls/cheatsheets/blob/master/docker-compose.md)
