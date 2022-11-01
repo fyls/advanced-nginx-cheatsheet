@@ -1,4 +1,10 @@
 # cheatsheets
-- [Elasticsearch](https://github.com/fyls/cheatsheets/blob/master/Elasticsearch.MD)
+- [Elasticsearch](https://github.com/fyls/cheatsheets/blob/master/Elasticsearch.MD)aws
 - [NGINX](https://github.com/fyls/cheatsheets/blob/master/NGINX.md)
 - [rabbitmq](https://github.com/fyls/cheatsheets/blob/master/rabbitmq.MD)
+- [AWS](https://github.com/cherkavi/cheat-sheet/blob/master/aws.md)
+- [Ansible](https://github.com/fyls/cheat-sheet/blob/master/ansible.md)
+- [docker](https://github.com/fyls/cheat-sheet/blob/master/docker.md)
+- [elastic](https://github.com/fyls/cheat-sheet/blob/master/elastic.md)
+- [git](https://github.com/fyls/cheat-sheet/blob/master/git.md)
+- [git](https://github.com/fyls/cheat-sheet/blob/master/kubernetes.md)
