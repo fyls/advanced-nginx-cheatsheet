@@ -13,7 +13,7 @@ ssh-copy-id user@host - https://askubuntu.com/a/46427
 ssh -L remotePort : 127.0.0.1:localPort -i ~/.ssh/secretKey root@remoteIp
 
 ## SCP
-'''bash
+```bash
 #To upload a file to a remote server:
 scp myfile.txt user@dest:/path
 #To recursively upload a local folder to a remote server:
@@ -22,4 +22,4 @@ scp -rp sourcedirectory user@dest:/path
 scp user@dest:/path/myfile.txt localpath
 #To recursively download a local folder to a remote server:
 scp -rp user@dest:/remotedir localpath
-'''
+```
